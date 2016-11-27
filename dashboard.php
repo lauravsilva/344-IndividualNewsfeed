@@ -30,15 +30,19 @@
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <div>
         <?php
-        session_start();
+            session_start();
         
-        $curr_user = $_SESSION["username"];
+            $curr_user = $_SESSION["username"];
+            echo "user: " . $_SESSION["username"];
 
-//    echo '<pre>' . print_r($jsonEncode, true) . '</pre>';
+        //    echo '<pre>' . print_r($jsonEncode, true) . '</pre>';
         
-    ?> </div>
+        
+        
+        ?>
+    </div>
     <div class="container">
-        <?php if ($curr_user != "") : ?>
+        <?php if (true) : ?>
             <div class="top-bar"> <a href="index.php" title="Logout">Logout</a> </div>
             <h2>News Headlines for <span id="session_user"><?php echo $curr_user; ?></span></h2>
             <div id="last_visit"></div>
@@ -84,7 +88,7 @@
                 <h2>News Headlines</h2>
                 <h4>You're not logged in. </h4>
                 <p> Click <a href="index.php">here</a> to login. </p>
-            <?php endif; ?>
+                <?php endif; ?>
     </div>
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -92,57 +96,6 @@
     <script type="text/javascript" src="js/utilities.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
-    <script type="text/javascript">
-//        $(document).ready(function () {
-            //feed to parse
-//            var feed = "http://feeds.feedburner.com/raymondcamdensblog?format=xml";
-//            var feed = "http://feeds.abcnews.com/abcnews/topstories";
-//            $.ajax(feed, {
-//                accepts: {
-//                    xml: "application/rss+xml"
-//                }
-//                , dataType: "xml"
-//                , success: function (data) {
-//                    $(data).find("item").each(function () {
-//                        var el = $(this);
-//                        console.log("------------------------");
-//                        console.log("title      : " + el.find("title").text());
-//                        console.log("link       : " + el.find("link").text());
-//                        console.log("description: " + el.find("description").text());
-//                        console.log("pubDate: " + el.find("pubDate").text());
-//                    });
-//                }
-//            });
-//        });
-
-
-        //        window.onload = function () {
-        //            // setup events
-        //            prepareEvents();
-        //            // load initial data
-        //            getDataFromTextFile();
-        //        };
-        //        api:  http://www.ist.rit.edu/api/
-        //                $(document).ready(function () {
-        //                    $.ajax({
-        //                        url: 'http://feeds.abcnews.com/abcnews/topstories'
-        //                        , type: 'GET'
-        //                        , dataType: "jsonp xml"
-        //                        , success: function (data) {
-        //                            console.log("xml file is loaded");
-        //                            parseXml(data);
-        //                        }
-        //                        , async: true
-        //                    });
-        //                });
-        //        
-        //                function parseXml(xml) {
-        //                    var item = $(xml).find("title");
-        //                    $(item).each(function () {
-        //                        $("#results").append($("enclosure").attr("url").text() + "<br />");
-        //                    });
-        //                }
-    </script>
 </body>
 
 </html>

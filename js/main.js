@@ -16,15 +16,16 @@ var session_username = "";
  ****************************************/
 function init() {
     session_username = $("#session_user").html();
-    checkCookie();
-    $("#news-container").fadeOut(250);
-    updateAllFavorites()
-    updateDisplayedStories();
-    $("input").on("click", function () {
-        news_type = "";
-        //        getTopStories();
-        getNewsFeed($("input:checked").val());
-    });
+    if (session_username !== undefined) {
+        checkCookie();
+        $("#news-container").fadeOut(250);
+        updateAllFavorites();
+//        updateDisplayedStories();
+        $("input").on("click", function () {
+            news_type = "";
+            getNewsFeed($("input:checked").val());
+        });
+    }
 }
 /****************************************
  *       AJAX to load news data 
@@ -86,11 +87,12 @@ function getNewsFeed(type) {
         news_type = TECH_URL;
         break;
     }
-    $.get(news_type).done(function (data) {
-        //        xmlLoaded(data);
-        getTopStories(news_type);
-        console.log(type);
-    });
+    //    $.get(news_type).done(function (data) {
+    //        xmlLoaded(data);
+    console.log(type);
+    getTopStories(news_type);
+    //        console.log(data);
+    //    });
 }
 /****************************************
  *       Cookies 
@@ -128,27 +130,27 @@ function checkCookie() {
 /****************************************
  *       
  ****************************************/
-function getTopStories(feed) {
-    console.log("get top stories: " + feed);
-    //    var items = obj.querySelectorAll("item");
+function getTopStories(feed_url) {
     var html = "";
-    $.ajax(feed, {
-        accepts: {
-            xml: "application/rss+xml"
+    $.ajax({
+        type: "GET"
+        , url: document.location.protocol + '//ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1000&callback=?&q=' + encodeURIComponent(feed_url)
+        , dataType: 'json'
+        , error: function () {
+            alert('Unable to load feed, Incorrect path or invalid feed');
         }
-        , dataType: "xml"
-        , success: function (data) {
-            
-        var channel = data.querySelectorAll("channel");
-        document.querySelector("#news-container").innerHTML = "<h3>" + channel[0].querySelector("title").firstChild.nodeValue + "</h3>";
-        html += "<h3>" + channel[0].querySelector("title").firstChild.nodeValue + "</h3>";
-            
-        $(data).find("item").each(function () {
+        , success: function (xml) {
+            var feed = xml.responseData.feed;
+//            console.log(feed);
+            var channel_title = feed["title"];
+            document.querySelector("#news-container").innerHTML = "<h3>" + channel_title + "</h3>";
+            html += "<h3>" + channel_title + "</h3>";
+            $(feed["entries"]).each(function () {
                 var el = $(this);
-                var title = el.find("title").text();
-                var link = el.find("link").text();
-                var description = el.find("description").text();
-                var pubDate = el.find("pubDate").text();
+                var title = el[0]['title'];
+                var description = el[0]['content'];
+                var pubDate = el[0]['pubDate'];
+                var link = el[0]['link'];
                 var line = '<div class="item">';
                 line += "<small>" + moment(pubDate).format('LLLL') + "</small>";
                 line += "<h5>" + title + "</h5>";
@@ -184,7 +186,8 @@ function favoriteStory(story) {
     }));
     if (xhr.status === 200) {
         updateFavoriteButton(story);
-        updateDisplayedStories();
+        updateAllFavorites();
+//        updateDisplayedStories();
     }
     else {
         console.log("error");
@@ -201,7 +204,8 @@ function unfavoriteStory(story) {
     }));
     if (xhr.status === 200) {
         updateFavoriteButton(story);
-        updateDisplayedStories();
+        updateAllFavorites();
+//        updateDisplayedStories();
     }
     else {
         console.log("error");
@@ -242,8 +246,7 @@ function updateFavoriteButton(story) {
     }
 }
 /* take the list of names and display it on screen */
-const updateDisplayedStories = function () {
-        updateAllFavorites();
+function updateDisplayedStories() {
         var json_obj;
         var list = document.createElement('ul');
         $.getJSON("data.json", function (data) {
@@ -265,7 +268,7 @@ const updateDisplayedStories = function () {
                 list.appendChild(li);
             }
             var container = document.getElementById('favorites');
-            container.innerHTML = ''; // empty the container
+            container.innerHTML = '';
             container.appendChild(list);
         });
     }
@@ -282,6 +285,7 @@ function findWithAttr(array, attr, value) {
 function updateAllFavorites() {
     var json_obj;
     allFavorites = [];
+    console.log(allFavorites);
     $.getJSON("data.json", function (data) {
         json_obj = data;
         var indexUser = findWithAttr(data.accounts, "user", session_username);
@@ -290,4 +294,5 @@ function updateAllFavorites() {
             allFavorites.push(fav_story_url);
         }
     });
+    updateDisplayedStories();
 }

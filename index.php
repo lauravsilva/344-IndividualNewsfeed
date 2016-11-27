@@ -28,10 +28,9 @@
 <body>
     <div>
         <?php
-
             session_start();
         
-            $_SESSION["username"] = "";
+//            $_SESSION["username"] = "";
         
             $msg = '';
             $create = '';
@@ -43,7 +42,8 @@
         
 //            echo '<pre>' . print_r($jsonData, true) . '</pre>';
         
-        
+//        phpinfo();
+            
             foreach ($jsonData['accounts'] as $key => $value) {
                 if (in_array($_POST['username'], $value)){                    
                     if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['password'])) {
@@ -52,7 +52,9 @@
                             $_SESSION['username'] = $_POST['username'];
 
                             $msg = 'You have entered valid username and password. <a href="dashboard.php">Click here to continue</a>';
+                            echo $_SESSION['username'];
                             echo '<script type="text/javascript">window.location = "dashboard.php"</script>';
+                            exit();
                             break;
                        }
                         else {
