@@ -1,0 +1,162 @@
+body {
+  margin: 50px auto; }
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-weight: 700;
+  text-transform: uppercase; }
+
+h3 {
+  color: #cda34f; }
+
+h4 {
+  font-size: 2.5rem; }
+
+.inner-container {
+  margin: 30px auto; }
+
+input,
+label {
+  line-height: 1.5em;
+  display: inline-block; }
+
+input {
+  margin-right: 10px; }
+
+#last_visit {
+  font-size: 60%; }
+
+.item {
+  margin: 40px auto;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e9e7da; }
+
+#news_type_form {
+  margin: 2.5rem auto 3rem; }
+
+.two-thirds {
+  padding-left: 20px; }
+
+.btn {
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  cursor: pointer;
+  padding: 25px;
+  display: inline-block;
+  margin: 15px 30px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  -webkit-transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  transition: all 0.3s; }
+  .btn:before {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    position: relative;
+    -webkit-font-smoothing: antialiased; }
+  .btn:after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s; }
+
+.btn-original {
+  padding: 10px 20px;
+  text-decoration: none;
+  background: #e9e7da;
+  color: #cda34f;
+  line-height: 14px;
+  font-size: 14px;
+  overflow: hidden;
+  margin: 10px;
+  display: inline-block; }
+  .btn-original:hover {
+    background-color: #636b46;
+    color: #e9e7da; }
+
+.btn-addfav {
+  padding: 10px 20px;
+  text-decoration: none;
+  background: #cda34f;
+  color: #e9e7da;
+  line-height: 14px;
+  font-size: 14px;
+  overflow: hidden;
+  margin: 10px;
+  display: inline-block; }
+  .btn-addfav:hover {
+    background-color: #636b46;
+    color: #cda34f; }
+
+.btn-fav {
+  padding: 10px 20px;
+  text-decoration: none;
+  background: #636b46;
+  color: #e9e7da;
+  line-height: 14px;
+  font-size: 14px;
+  overflow: hidden;
+  margin: 10px;
+  display: inline-block; }
+  .btn-fav:hover {
+    background-color: #cda34f;
+    color: #e9e7da; }
+
+.allFavs {
+  background: #636b46;
+  padding: 20px;
+  margin-bottom: 40px; }
+  .allFavs h4 {
+    color: #e9e7da; }
+  .allFavs li {
+    list-style: none;
+    margin-bottom: 30px; }
+  .allFavs a {
+    color: white; }
+    .allFavs a:hover {
+      color: #e9e7da;
+      text-decoration: none; }
+
+.top-bar {
+  text-align: right; }
+  .top-bar a {
+    color: #373f27; }
+    .top-bar a:hover {
+      text-decoration: none; }
+
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+  width: 75%; }
+
+.form-createaccount-heading,
+.form-signin-heading {
+  margin: 15px auto 5px;
+  color: red;
+  min-height: 35px; }
+  .form-createaccount-heading i,
+  .form-signin-heading i {
+    margin-right: 15px; }
+
+/*# sourceMappingURL=style.css.map */

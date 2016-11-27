@@ -1,0 +1,194 @@
+$gold: #cda34f;
+$daisy: #e9e7da;
+$stem: #636b46;
+$greenery: #373f27;
+body {
+    margin: 50px auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+h3 {
+    color: $gold;
+}
+
+h4 {
+    font-size: 2.5rem;
+}
+
+.inner-container {
+    margin: 30px auto;
+}
+
+input,
+label {
+    line-height: 1.5em;
+    display: inline-block;
+}
+
+input {
+    margin-right: 10px;
+}
+
+#last_visit {
+    font-size: 60%;
+}
+
+.item {
+    margin: 40px auto;
+    padding-bottom: 30px;
+    border-bottom: 1px solid $daisy;
+}
+
+#news_type_form {
+    margin: 2.5rem auto 3rem;
+}
+
+.two-thirds {
+    padding-left: 20px;
+}
+
+.btn {
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    background: none;
+    cursor: pointer;
+    padding: 25px;
+    display: inline-block;
+    margin: 15px 30px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    outline: none;
+    position: relative;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    &:before {
+        font-family: 'icomoon';
+        speak: none;
+        font-style: normal;
+        font-weight: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        position: relative;
+        -webkit-font-smoothing: antialiased;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        -webkit-transition: all 0.3s;
+        -moz-transition: all 0.3s;
+        transition: all 0.3s;
+    }
+}
+
+.btn-original {
+    padding: 10px 20px;
+    text-decoration: none;
+    background: $daisy;
+    color: $gold;
+    line-height: 14px;
+    font-size: 14px;
+    overflow: hidden;
+    margin: 10px;
+    display: inline-block;
+    &:hover {
+        background-color: $stem;
+        color: $daisy;
+    }
+}
+
+.btn-addfav {
+    padding: 10px 20px;
+    text-decoration: none;
+    background: $gold;
+    color: $daisy;
+    line-height: 14px;
+    font-size: 14px;
+    overflow: hidden;
+    margin: 10px;
+    display: inline-block;
+    &:hover {
+        background-color: $stem;
+        color: $gold;
+    }
+}
+
+.btn-fav {
+    padding: 10px 20px;
+    text-decoration: none;
+    background: $stem;
+    color: $daisy;
+    line-height: 14px;
+    font-size: 14px;
+    overflow: hidden;
+    margin: 10px;
+    display: inline-block;
+    &:hover {
+        background-color: $gold;
+        color: $daisy;
+    }
+}
+
+.allFavs {
+    background: $stem;
+    padding: 20px;
+    margin-bottom: 40px;
+    h4 {
+        color: $daisy;
+    }
+    li {
+        list-style: none;
+        margin-bottom: 30px;
+    }
+    a {
+        color: white;
+        &:hover {
+            color: $daisy;
+            text-decoration: none;
+        }
+    }
+}
+
+.top-bar {
+    text-align: right;
+    a {
+        color: $greenery;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+input[type="email"],
+input[type="number"],
+input[type="search"],
+input[type="text"],
+input[type="tel"],
+input[type="url"],
+input[type="password"],
+textarea {
+    width: 75%;
+}
+
+.form-createaccount-heading,
+.form-signin-heading {
+    margin: 15px auto 5px;
+    color: red;
+    min-height: 35px;
+    i {
+        margin-right: 15px;
+    }
+}
