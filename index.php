@@ -118,7 +118,8 @@
                     <input type="password" name="password" placeholder="Password" required>
                     <br/>
                     <button class="btn btn-fav" type="submit" name="login">Login</button>
-                </form> </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>

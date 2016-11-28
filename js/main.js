@@ -27,41 +27,7 @@ function init() {
         });
     }
 }
-/****************************************
- *       AJAX to load news data 
- ****************************************/
-function xmlLoaded(obj) {
-    var channel = obj.querySelectorAll("channel");
-    document.querySelector("#news-container").innerHTML = "<h3>" + channel[0].querySelector("title").firstChild.nodeValue + "</h3>";
-    var items = obj.querySelectorAll("item");
-    var html = "";
-    html += "<h3>" + channel[0].querySelector("title").firstChild.nodeValue + "</h3>";
-    for (var i = 0; i < items.length; i++) {
-        //get the data out of the item
-        var newsItem = items[i];
-        var title = newsItem.querySelector("title").firstChild.nodeValue;
-        var description = newsItem.querySelector("description").firstChild.nodeValue;
-        var link = newsItem.querySelector("link").firstChild.nodeValue;
-        var pubDate = newsItem.querySelector("pubDate").firstChild.nodeValue;
-        //present the item as HTML
-        var line = '<div class="item">';
-        line += "<small>" + moment(pubDate).format('LLLL') + "</small>";
-        line += "<h5>" + title + "</h5>";
-        line += "<p>" + description + "</p>";
-        line += '<a href="' + link + '" target="_blank" class="btn btn-original">See original <i class="fa fa-newspaper-o" aria-hidden="true"></i></a>';
-        var urlIndex = $.inArray(link, allFavorites);
-        if (urlIndex > -1) {
-            line += '<a onclick="unfavoriteStory(this);" class="btn btn-fav" data-storyurl="' + link + '">Favorite <i class="fa fa-heart" aria-hidden="true"></i> </a>';
-        }
-        else {
-            line += '<a onclick="favoriteStory(this);"  class="btn btn-addfav" data-storyurl="' + link + '">Add to Favorites <i class="fa fa-heart-o" aria-hidden="true"></i> </a>';
-        }
-        line += "</div>";
-        html += line;
-    }
-    document.querySelector("#news-container").innerHTML = html;
-    $("#news-container").fadeIn(1000);
-}
+
 /****************************************
  *       Get specific news type from form 
  ****************************************/
@@ -87,12 +53,7 @@ function getNewsFeed(type) {
         news_type = TECH_URL;
         break;
     }
-    //    $.get(news_type).done(function (data) {
-    //        xmlLoaded(data);
-    //    console.log(type);
     getTopStories(news_type);
-    //        console.log(data);
-    //    });
 }
 /****************************************
  *       Cookies 
@@ -128,7 +89,7 @@ function checkCookie() {
     setCookie("date", today, 30);
 }
 /****************************************
- *       News feed
+ *       AJAX to load news data 
  ****************************************/
 function getTopStories(feed_url) {
     var html = "";
@@ -172,7 +133,7 @@ function getTopStories(feed_url) {
     });
 }
 /****************************************
- *       Favorite Story
+ *       Favorite / Unfavorite Story
  ****************************************/
 var allFavorites = [];
 
@@ -207,24 +168,6 @@ function favoriteStory(story) {
         updateFavoriteButton(story);
         updateAllFavorites();
     });
-    //    $.ajax({
-    //        type: "POST"
-    //        , url: "favorites.php"
-    //        , data: JSON.stringify({
-    //            storyName, storyURL
-    //        })
-    //        , success: function () {
-    //            console.log("SUCCESS!!!");
-    //            updateFavoriteButton(story);
-    //            updateAllFavorites();
-    //        }
-    //        , fail: function (xhr, textStatus, errorThrown) {
-    //            console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
-    //        }
-    //        , always: function(){
-    //            console.log("always");
-    //        }
-    //    });
 }
 
 function unfavoriteStory(story) {
@@ -238,7 +181,6 @@ function unfavoriteStory(story) {
     if (xhr.status === 200) {
         updateFavoriteButton(story);
         updateAllFavorites();
-        //        updateDisplayedStories();
     }
     else {
         console.log("error");
@@ -262,6 +204,10 @@ function removeStory(story) {
     }
 }
 
+/****************************************
+ *       Update Buttons
+ ****************************************/
+
 function updateFavoriteButton(story) {
     var link = $(story).attr('data-storyurl');
     if (story.className == "btn btn-addfav") {
@@ -275,13 +221,13 @@ function updateFavoriteButton(story) {
         story.setAttribute('onclick', 'favoriteStory(this);');
     }
 }
-/* take the list of names and display it on screen */
+/****************************************
+ *       Update Favorite Stories
+ ****************************************/
 function updateDisplayedStories() {
-    //    console.log("updateDisplayedStories");
     var json_obj;
     var list = document.createElement('ul');
     $.getJSON("data.json", function (data) {
-        //        console.log("getJSON updateDisplayed");
         json_obj = data;
         var indexUser = findWithAttr(data.accounts, "user", session_username);
         var list = document.createElement('ul');
@@ -307,7 +253,9 @@ function updateDisplayedStories() {
         container.appendChild(list);
     });
 }
-/* Find index in array with specific attribute */
+/****************************************
+ *       Find index in array with specific attribute
+ ****************************************/
 function findWithAttr(array, attr, value) {
     for (var i = 0; i < array.length; i += 1) {
         if (array[i][attr] === value) {
@@ -317,10 +265,12 @@ function findWithAttr(array, attr, value) {
     return -1;
 }
 
+/****************************************
+ *       Update allFavorites array
+ ****************************************/
 function updateAllFavorites() {
     var json_obj;
     allFavorites = [];
-    //    console.log("update all allFavorites");
     $.getJSON("data.json", function (data) {
         json_obj = data;
         var indexUser = findWithAttr(data.accounts, "user", session_username);
@@ -329,6 +279,5 @@ function updateAllFavorites() {
             allFavorites.push(fav_story_url);
         }
     });
-    //    console.log(allFavorites);
     updateDisplayedStories();
 }
