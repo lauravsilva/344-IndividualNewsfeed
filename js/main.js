@@ -20,7 +20,7 @@ function init() {
         checkCookie();
         $("#news-container").fadeOut(250);
         updateAllFavorites();
-//        updateDisplayedStories();
+        //        updateDisplayedStories();
         $("input").on("click", function () {
             news_type = "";
             getNewsFeed($("input:checked").val());
@@ -128,7 +128,7 @@ function checkCookie() {
     setCookie("date", today, 30);
 }
 /****************************************
- *       
+ *       News feed
  ****************************************/
 function getTopStories(feed_url) {
     var html = "";
@@ -141,7 +141,7 @@ function getTopStories(feed_url) {
         }
         , success: function (xml) {
             var feed = xml.responseData.feed;
-//            console.log(feed);
+            //            console.log(feed);
             var channel_title = feed["title"];
             document.querySelector("#news-container").innerHTML = "<h3>" + channel_title + "</h3>";
             html += "<h3>" + channel_title + "</h3>";
@@ -177,21 +177,54 @@ function getTopStories(feed_url) {
 var allFavorites = [];
 
 function favoriteStory(story) {
+    console.log("fav");
     var storyURL = $(story).attr('data-storyurl');
     var storyName = $(story).siblings('h5').html();
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'favorites.php', false);
-    xhr.send(JSON.stringify({
+    //    var xhr = new XMLHttpRequest();
+    //    xhr.open('POST', 'favorites.php', false);
+    //        xhr.send(JSON.stringify({
+    //        storyName, storyURL
+    //    }));
+    //    if (xhr.status === 200) {
+    //        updateFavoriteButton(story);
+    //        updateAllFavorites();
+    ////        updateDisplayedStories();
+    //    }
+    //    else {
+    //        console.log("error");
+    //    }
+    //    var params = JSON.stringify({
+    //        storyName, storyURL
+    //    });
+    $.post('favorites.php', {
         storyName, storyURL
-    }));
-    if (xhr.status === 200) {
+    }).done(function (data) {
+        console.log("data: " + data);
+    }).fail(function (xhr, textStatus, errorThrown) {
+        console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
+    }).always(function () {
+        console.log("finished");
         updateFavoriteButton(story);
         updateAllFavorites();
-//        updateDisplayedStories();
-    }
-    else {
-        console.log("error");
-    }
+    });
+//    $.ajax({
+//        type: "POST"
+//        , url: "favorites.php"
+//        , data: JSON.stringify({
+//            storyName, storyURL
+//        })
+//        , success: function () {
+//            console.log("SUCCESS!!!");
+//            updateFavoriteButton(story);
+//            updateAllFavorites();
+//        }
+//        , fail: function (xhr, textStatus, errorThrown) {
+//            console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
+//        }
+//        , always: function(){
+//            console.log("always");
+//        }
+//    });
 }
 
 function unfavoriteStory(story) {
@@ -205,7 +238,7 @@ function unfavoriteStory(story) {
     if (xhr.status === 200) {
         updateFavoriteButton(story);
         updateAllFavorites();
-//        updateDisplayedStories();
+        //        updateDisplayedStories();
     }
     else {
         console.log("error");
@@ -247,32 +280,34 @@ function updateFavoriteButton(story) {
 }
 /* take the list of names and display it on screen */
 function updateDisplayedStories() {
-        var json_obj;
+    console.log("updateDisplayedStories");
+    var json_obj;
+    var list = document.createElement('ul');
+    $.getJSON("data.json", function (data) {
+        console.log("getJSON updateDisplayed");
+        json_obj = data;
+        var indexUser = findWithAttr(data.accounts, "user", session_username);
         var list = document.createElement('ul');
-        $.getJSON("data.json", function (data) {
-            json_obj = data;
-            var indexUser = findWithAttr(data.accounts, "user", session_username);
-            var list = document.createElement('ul');
-            for (var i in json_obj["accounts"][indexUser]["favorites"]) {
-                var fav_story_name = json_obj["accounts"][indexUser]["favorites"][i]["name"];
-                var fav_story_url = json_obj["accounts"][indexUser]["favorites"][i]["url"];
-                var aTag = document.createElement('a');
-                aTag.setAttribute('href', fav_story_url);
-                aTag.innerHTML = fav_story_name;
-                var li = document.createElement('li');
-                //            var minus = document.createElement('span');
-                //            minus.innerHTML = "<i class='fa fa-trash-o' aria-hidden='true' onclick='removeStory(this);'></i> ";
-                //            
-                //            li.appendChild(minus);
-                li.appendChild(aTag);
-                list.appendChild(li);
-            }
-            var container = document.getElementById('favorites');
-            container.innerHTML = '';
-            container.appendChild(list);
-        });
-    }
-    /* Find index in array with specific attribute */
+        for (var i in json_obj["accounts"][indexUser]["favorites"]) {
+            var fav_story_name = json_obj["accounts"][indexUser]["favorites"][i]["name"];
+            var fav_story_url = json_obj["accounts"][indexUser]["favorites"][i]["url"];
+            var aTag = document.createElement('a');
+            aTag.setAttribute('href', fav_story_url);
+            aTag.innerHTML = fav_story_name;
+            var li = document.createElement('li');
+            //            var minus = document.createElement('span');
+            //            minus.innerHTML = "<i class='fa fa-trash-o' aria-hidden='true' onclick='removeStory(this);'></i> ";
+            //            
+            //            li.appendChild(minus);
+            li.appendChild(aTag);
+            list.appendChild(li);
+        }
+        var container = document.getElementById('favorites');
+        container.innerHTML = '';
+        container.appendChild(list);
+    });
+}
+/* Find index in array with specific attribute */
 function findWithAttr(array, attr, value) {
     for (var i = 0; i < array.length; i += 1) {
         if (array[i][attr] === value) {
@@ -285,7 +320,7 @@ function findWithAttr(array, attr, value) {
 function updateAllFavorites() {
     var json_obj;
     allFavorites = [];
-    console.log(allFavorites);
+    console.log("update all allFavorites");
     $.getJSON("data.json", function (data) {
         json_obj = data;
         var indexUser = findWithAttr(data.accounts, "user", session_username);
@@ -294,5 +329,6 @@ function updateAllFavorites() {
             allFavorites.push(fav_story_url);
         }
     });
+    console.log(allFavorites);
     updateDisplayedStories();
 }

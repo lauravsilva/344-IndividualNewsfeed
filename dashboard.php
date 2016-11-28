@@ -33,16 +33,13 @@
             session_start();
         
             $curr_user = $_SESSION["username"];
-            echo "user: " . $_SESSION["username"];
+//            echo "user: " . $_SESSION["username"];
 
         //    echo '<pre>' . print_r($jsonEncode, true) . '</pre>';
         
-        
-        
-        ?>
-    </div>
+        ?> </div>
     <div class="container">
-        <?php if (true) : ?>
+        <?php if ($_SESSION["username"] != "") : ?>
             <div class="top-bar"> <a href="index.php" title="Logout">Logout</a> </div>
             <h2>News Headlines for <span id="session_user"><?php echo $curr_user; ?></span></h2>
             <div id="last_visit"></div>
@@ -92,7 +89,7 @@
     </div>
     <!-- End Document
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="js/utilities.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/moment.min.js"></script>
