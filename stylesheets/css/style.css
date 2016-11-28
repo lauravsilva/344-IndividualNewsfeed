@@ -134,7 +134,8 @@ input {
       text-decoration: none; }
 
 .top-bar {
-  text-align: right; }
+  text-align: right;
+  margin-bottom: 15px; }
   .top-bar a {
     color: #373f27; }
     .top-bar a:hover {
@@ -158,5 +159,13 @@ textarea {
   .form-createaccount-heading i,
   .form-signin-heading i {
     margin-right: 15px; }
+
+.rem {
+  cursor: pointer;
+  color: white;
+  float: left;
+  margin-right: 15px; }
+  .rem:hover {
+    color: #cda34f; }
 
 /*# sourceMappingURL=style.css.map */

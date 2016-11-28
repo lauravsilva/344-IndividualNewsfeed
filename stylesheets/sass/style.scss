@@ -164,6 +164,7 @@ input {
 
 .top-bar {
     text-align: right;
+    margin-bottom: 15px;
     a {
         color: $greenery;
         &:hover {
@@ -190,5 +191,15 @@ textarea {
     min-height: 35px;
     i {
         margin-right: 15px;
+    }
+}
+
+.rem {
+    cursor: pointer;
+    color: white;
+    float: left;
+    margin-right: 15px;
+    &:hover {
+        color: $gold;
     }
 }

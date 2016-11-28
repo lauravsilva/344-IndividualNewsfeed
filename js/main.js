@@ -89,7 +89,7 @@ function getNewsFeed(type) {
     }
     //    $.get(news_type).done(function (data) {
     //        xmlLoaded(data);
-    console.log(type);
+    //    console.log(type);
     getTopStories(news_type);
     //        console.log(data);
     //    });
@@ -177,7 +177,7 @@ function getTopStories(feed_url) {
 var allFavorites = [];
 
 function favoriteStory(story) {
-    console.log("fav");
+    //    console.log("fav");
     var storyURL = $(story).attr('data-storyurl');
     var storyName = $(story).siblings('h5').html();
     //    var xhr = new XMLHttpRequest();
@@ -199,32 +199,32 @@ function favoriteStory(story) {
     $.post('favorites.php', {
         storyName, storyURL
     }).done(function (data) {
-        console.log("data: " + data);
+        //        console.log("data: " + data);
     }).fail(function (xhr, textStatus, errorThrown) {
-        console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
+        //        console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
     }).always(function () {
-        console.log("finished");
+        //        console.log("finished");
         updateFavoriteButton(story);
         updateAllFavorites();
     });
-//    $.ajax({
-//        type: "POST"
-//        , url: "favorites.php"
-//        , data: JSON.stringify({
-//            storyName, storyURL
-//        })
-//        , success: function () {
-//            console.log("SUCCESS!!!");
-//            updateFavoriteButton(story);
-//            updateAllFavorites();
-//        }
-//        , fail: function (xhr, textStatus, errorThrown) {
-//            console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
-//        }
-//        , always: function(){
-//            console.log("always");
-//        }
-//    });
+    //    $.ajax({
+    //        type: "POST"
+    //        , url: "favorites.php"
+    //        , data: JSON.stringify({
+    //            storyName, storyURL
+    //        })
+    //        , success: function () {
+    //            console.log("SUCCESS!!!");
+    //            updateFavoriteButton(story);
+    //            updateAllFavorites();
+    //        }
+    //        , fail: function (xhr, textStatus, errorThrown) {
+    //            console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
+    //        }
+    //        , always: function(){
+    //            console.log("always");
+    //        }
+    //    });
 }
 
 function unfavoriteStory(story) {
@@ -246,11 +246,8 @@ function unfavoriteStory(story) {
 }
 
 function removeStory(story) {
-    var storyURL = $(story).siblings('a').attr('href');
-    var storyName = $(story).siblings('a').html();
-    console.log($(story).parent().siblings('a'));
-    //                siblings('a'));
-    //    console.log(storyName);
+    var storyName = $(story).parent().siblings("li").children().first().html();
+    var storyURL = $(story).parent().siblings("li").children().first().attr('href');
     var xhr = new XMLHttpRequest();
     xhr.open('POST', 'favorites-delete.php', false);
     xhr.send(JSON.stringify({
@@ -258,7 +255,7 @@ function removeStory(story) {
     }));
     if (xhr.status === 200) {
         updateFavoriteButton(story);
-        updateDisplayedStories();
+        updateAllFavorites();
     }
     else {
         console.log("error");
@@ -280,11 +277,11 @@ function updateFavoriteButton(story) {
 }
 /* take the list of names and display it on screen */
 function updateDisplayedStories() {
-    console.log("updateDisplayedStories");
+    //    console.log("updateDisplayedStories");
     var json_obj;
     var list = document.createElement('ul');
     $.getJSON("data.json", function (data) {
-        console.log("getJSON updateDisplayed");
+        //        console.log("getJSON updateDisplayed");
         json_obj = data;
         var indexUser = findWithAttr(data.accounts, "user", session_username);
         var list = document.createElement('ul');
@@ -294,13 +291,16 @@ function updateDisplayedStories() {
             var aTag = document.createElement('a');
             aTag.setAttribute('href', fav_story_url);
             aTag.innerHTML = fav_story_name;
+            var fav_item = document.createElement('div');
+            $(fav_item).addClass("fav-item");
             var li = document.createElement('li');
-            //            var minus = document.createElement('span');
-            //            minus.innerHTML = "<i class='fa fa-trash-o' aria-hidden='true' onclick='removeStory(this);'></i> ";
-            //            
-            //            li.appendChild(minus);
+            var minus = document.createElement('span');
+            $(minus).addClass("rem");
+            minus.innerHTML = "<i class='fa fa-times' aria-hidden='true' onclick='removeStory(this);'></i> ";
             li.appendChild(aTag);
-            list.appendChild(li);
+            fav_item.appendChild(minus);
+            fav_item.appendChild(li);
+            list.appendChild(fav_item);
         }
         var container = document.getElementById('favorites');
         container.innerHTML = '';
@@ -320,7 +320,7 @@ function findWithAttr(array, attr, value) {
 function updateAllFavorites() {
     var json_obj;
     allFavorites = [];
-    console.log("update all allFavorites");
+    //    console.log("update all allFavorites");
     $.getJSON("data.json", function (data) {
         json_obj = data;
         var indexUser = findWithAttr(data.accounts, "user", session_username);
@@ -329,6 +329,6 @@ function updateAllFavorites() {
             allFavorites.push(fav_story_url);
         }
     });
-    console.log(allFavorites);
+    //    console.log(allFavorites);
     updateDisplayedStories();
 }

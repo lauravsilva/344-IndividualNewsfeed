@@ -50,7 +50,6 @@
     }
 
 
-
     $jsonEncode = json_encode($jsonData);
     file_put_contents($FILEPATH, $jsonEncode);
 ?>
