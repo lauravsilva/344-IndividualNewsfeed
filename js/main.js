@@ -94,12 +94,13 @@ function getCookie(cname) {
 }
 
 function checkCookie() {
-    var date = getCookie("date");
+    var date = getCookie(session_username);
     if (date != "") {
         document.getElementById("last_visit").innerHTML = "Your last visit was on " + moment(date).format('LLLL');
     }
     var today = new Date();
-    setCookie("date", today, 30);
+//    setCookie("date", today, 30);
+    setCookie(session_username, today, 30);
 }
 /****************************************
  *       AJAX to load news data 
@@ -187,35 +188,59 @@ function favoriteStory(story) {
 function unfavoriteStory(story) {
     var storyURL = $(story).attr('data-storyurl');
     var storyName = $(story).siblings('h5').html();
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'favorites-delete.php', false);
-    xhr.send(JSON.stringify({
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('POST', 'favorites-delete.php', false);
+//    xhr.send(JSON.stringify({
+//        storyName, storyURL
+//    }));
+//    if (xhr.status === 200) {
+//        updateFavoriteButton(story);
+//        updateAllFavorites();
+//    }
+//    else {
+//        console.log("error");
+//    }
+    
+    $.post('favorites-delete.php', {
         storyName, storyURL
-    }));
-    if (xhr.status === 200) {
+    }).done(function (data) {
+        //        console.log("data: " + data);
+    }).fail(function (xhr, textStatus, errorThrown) {
+        //        console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
+    }).always(function () {
+        //        console.log("finished");
         updateFavoriteButton(story);
         updateAllFavorites();
-    }
-    else {
-        console.log("error");
-    }
+    });
 }
 
 function removeStory(story) {
     var storyName = $(story).parent().siblings("li").children().first().html();
     var storyURL = $(story).parent().siblings("li").children().first().attr('href');
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'favorites-delete.php', false);
-    xhr.send(JSON.stringify({
+    
+//    var xhr = new XMLHttpRequest();
+//    xhr.open('POST', 'favorites-delete.php', false);
+//    xhr.send(JSON.stringify({
+//        storyName, storyURL
+//    }));
+//    if (xhr.status === 200) {
+//        updateFavoriteButton(story);
+//        updateAllFavorites();
+//    }
+//    else {
+//        console.log("error");
+//    }
+    $.post('favorites-delete.php', {
         storyName, storyURL
-    }));
-    if (xhr.status === 200) {
+    }).done(function (data) {
+        //        console.log("data: " + data);
+    }).fail(function (xhr, textStatus, errorThrown) {
+        //        console.log(xhr.responseText + "    error: " + errorThrown + "   text: " + textStatus);
+    }).always(function () {
+        //        console.log("finished");
         updateFavoriteButton(story);
         updateAllFavorites();
-    }
-    else {
-        console.log("error");
-    }
+    });
 }
 /****************************************
  *       Update Buttons

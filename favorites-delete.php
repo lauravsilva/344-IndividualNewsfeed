@@ -13,7 +13,7 @@
         foreach ($value as $k => $v) {
              if (in_array($_SESSION["username"], $value) && $k == "favorites"){
                  foreach ($v as $ey => $alue) {
-                    if ($alue["url"] == $incoming_data['storyURL']){
+                    if ($alue["url"] == $_POST['storyURL']){
                         unset($jsonData['accounts'][$key]['favorites'][$ey]);
                     }
                  }

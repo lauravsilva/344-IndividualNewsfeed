@@ -21,8 +21,8 @@
     foreach ($jsonData['accounts'] as $key => $value) {
         foreach ($value as $k => $v) {
             if (in_array($_SESSION["username"], $value) && $k == "favorites" && isset($_POST['storyName']) && isset($_POST['storyURL'])){
+                echo "in here";
                 array_push($jsonData['accounts'][$key]['favorites'], $new_fav);
-                
             }
         }
     }
