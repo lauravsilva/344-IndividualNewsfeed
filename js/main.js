@@ -11,6 +11,7 @@ var WEATHER_URL = "http://rss.accuweather.com/rss/blog_rss.asp?blog=headlines";
 var news_type;
 var data;
 var session_username = "";
+var newsfeedcontent = "";
 /****************************************
  *       Initializer 
  ****************************************/
@@ -23,11 +24,23 @@ function init() {
         //        updateDisplayedStories();
         $("input").on("click", function () {
             news_type = "";
-            getNewsFeed($("input:checked").val());
+            newsfeedcontent = "";
+            if ($("#news_type_form input:checkbox:checked").length > 1) {
+                $("input:checked").each(function (i, el) {
+                    getNewsFeed($(el).val());
+                });
+            }
+            else if ($("#news_type_form input:checkbox:checked").length == 0) {
+                newsfeedcontent = "";
+                document.querySelector("#news-container").innerHTML = newsfeedcontent;
+                $("#news-container").fadeIn(1000);
+            }
+            else {
+                getNewsFeed($("input:checked").val());
+            }
         });
     }
 }
-
 /****************************************
  *       Get specific news type from form 
  ****************************************/
@@ -127,7 +140,8 @@ function getTopStories(feed_url) {
                 line += "</div>";
                 html += line;
             });
-            document.querySelector("#news-container").innerHTML = html;
+            newsfeedcontent += html;
+            document.querySelector("#news-container").innerHTML = newsfeedcontent;
             $("#news-container").fadeIn(1000);
         }
     });
@@ -203,11 +217,9 @@ function removeStory(story) {
         console.log("error");
     }
 }
-
 /****************************************
  *       Update Buttons
  ****************************************/
-
 function updateFavoriteButton(story) {
     var link = $(story).attr('data-storyurl');
     if (story.className == "btn btn-addfav") {
@@ -264,7 +276,6 @@ function findWithAttr(array, attr, value) {
     }
     return -1;
 }
-
 /****************************************
  *       Update allFavorites array
  ****************************************/

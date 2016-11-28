@@ -48,27 +48,27 @@
                     <h4>Categories</h4>
                     <form id="news_type_form">
                         <div>
-                            <input type="radio" name="news_type" value="top">
+                            <input type="checkbox" name="news_type" value="top">
                             <label for="top">Top</label>
                         </div>
                         <div>
-                            <input type="radio" name="news_type" value="us">
+                            <input type="checkbox" name="news_type" value="us">
                             <label for="us">US</label>
                         </div>
                         <div>
-                            <input type="radio" name="news_type" value="world">
+                            <input type="checkbox" name="news_type" value="world">
                             <label for="world">World</label>
                         </div>
                         <div>
-                            <input type="radio" name="news_type" value="sports">
+                            <input type="checkbox" name="news_type" value="sports">
                             <label for="sports">Sports</label>
                         </div>
                         <div>
-                            <input type="radio" name="news_type" value="weather">
+                            <input type="checkbox" name="news_type" value="weather">
                             <label for="weather">Weather</label>
                         </div>
                         <div>
-                            <input type="radio" name="news_type" value="technology">
+                            <input type="checkbox" name="news_type" value="technology">
                             <label for="technology">Technology</label>
                         </div>
                     </form>
